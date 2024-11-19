@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+
+}
+
+body {
+    background-image: url("/images/bg.jpg");
+    background-size: cover;
+    background-position: center;
+
+    min-height: 100vh;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 3rem;
+    margin-bottom: 10px;
+    padding: 1.3rem 0;
+}
+
+.left{
+    display: flex;
+    align-items: center;
+}
+
+.left p{
+    font-size: 2.2em;
+    color: white;
+}
+
+.right a{
+    text-decoration: none;
+    font-size: 2.2em;
+    text-transform: uppercase;
+    color: #000000;
+    background-color: #FF8686;
+    padding: 0.5em;
+    border-radius: 29px;
+}
+
+.right a:hover{
+    background-color: #ff0000;
+    color: white;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    /* Rectangle 2 */
+
+    background: linear-gradient(180deg, rgba(177, 234, 255, 0.69) 0%, rgba(81, 85, 115, 0.79) 100%);
+    border: 1px solid #585858;
+    box-shadow: 2px 2px 8px 6px rgba(0, 0, 0, 0.25);
+    margin: 0;
+    padding: 3em;
+}
+
+main h1{
+    font-size: 2.6em;
+    margin-bottom: 1.6rem;
+}
+
+main .button{
+    text-decoration: none;
+    font-size: 1.6em;
+    text-transform: uppercase;
+    padding: 0.9em;
+    border-radius: 29px;
+
+    background: #0077FF;
+    border-radius: 50px;
+    color: white;
+
+}
+
+main .button:hover{
+    background: #0057ba;
+}
+
+/* posts */
+.posts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+}
+
+.item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 25px;
+
+    color: white;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.79);
+    border-radius: 13px;
+    padding: 2.3rem 3rem;
+    padding-bottom: 0;
+    margin-top: 3rem;
+    width: 800px;
+}
+
+.itemHead{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.itemHead .date{
+    border-bottom: 5px solid white;
+}
+
+.itemMain{
+    margin-top: 3rem;
+}
+
+.title{
+    color: #00B7FF;
+}
+
+.actionIcon{
+    width: 40px;
+    height: 40px;
+
+    filter: invert(1);
+    transition: 0.3s all linear;
+}
+
+.actionIcon:hover{
+    width: 45px;
+    height: 45px;
+    top: 37px;
+    transition: 0.3s all linear;
+}
+
+.fst{
+    position: absolute;
+    top: 40px;
+    right: 90px;
+}
+
+.snd{
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+
+@media (max-width: 1000px) {
+    .item{
+        width: 600px;
+    }
+
+}
+@media (max-width: 760px) {
+    .item{
+        width: 400px;
+    }
+
+}
+
+form button{
+    all: unset;
+}

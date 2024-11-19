@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/blog.css" />
+        <title>Blog</title>
+    </head>
+    <body>
+        <header>
+            <div class="left">
+                <img src="/images/acc.png" alt="icon">
+                <p class="username"> <%=username%> </p>
+            </div>
+            <div class="right">
+                <a class="button" href="/logout">Logout</a>
+            </div>
+        </header>
+        <main>
+            <h1>My blog</h1>
+            <a class="button" href="/new">new post</a>
+            <div class="posts">
+                <% posts.forEach(post => { %>
+                <div class="item">
+                    <div class="itemHead">
+                        <p><%=post.username%></p>
+                        <p><span class="date"> <%=post.postDate%> </span></p>
+                    </div>
+
+                    <div class="itemMain">
+                        <h2 class="title"><%=post.title%></h2>
+                        <p><%=post.description%></p>
+                    </div>
+                    <form action="/edit/<%= post.id %>" method="post">
+                        <button class="edit" onclick="this.form.submit()" name="deleteItemId" value="<%= post.post_id %>"><img class="actionIcon fst" src="/images/edit.svg" /></button>
+                    </form>
+                    
+                    <form action="/delete" method="post">
+                        <button class="delete" onclick="this.form.submit()" name="deleteItemId" value="<%= post.post_id %>"><img class="actionIcon snd" src="/images/delete.svg" /></button> 
+                    </form>
+                    <!-- <a href="/delete"><img class="actionIcon snd" src="/images/delete.svg" /></a> -->
+                </div>
+                <% }) %>
+            </div>
+        </main>
+    </body>
+</html>
