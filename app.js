@@ -9,7 +9,7 @@ const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 // встановлюємо статичну папку для елементів сайту (фото, стилі)
-app.use(express.static("public"));
+app.use(express.static("public"))
 // Для підлкючення env файлу
 env.config();
 
@@ -75,11 +75,11 @@ app.get('/blog', async (req, res) => {
     const username = req.session.username;
 
     if (!username) {
-        return res.redirect('/login'); // Redirect if user is not logged in
+        return res.redirect('/login'); // перекидує на сторінку логіну якщо в поточній сесії не зайдено
     }
 
     try {
-        // Query the database to get the user ID based on the username
+        // запит до БД
         const { data: userData, error: userError } = await supabase
             .from('users')
             .select('id')
@@ -91,20 +91,21 @@ app.get('/blog', async (req, res) => {
             return res.redirect('/blog');
         }
 
-        const userId = userData.id;  // Get the user ID from the query result
+        const userId = userData.id;  // ID юзера
 
-        // Now select only the posts created by the logged-in user
+        // вибір постів конкретно для юзера по ID
         const { data, error } = await supabase
             .from('posts')
             .select('*')
-            .eq('id', userId); // Filter posts by the logged-in user's ID
+            .eq('id', userId); // фільтр по ID юзера
 
         if (error) {
-            console.error(error);
-            return res.redirect('/blog'); // Handle error (optional)
+            console.error(error); // помилка
+            return res.redirect('/blog'); 
         }
+        console.log(data);
 
-        // Map the posts to the desired format
+        // відображення наявних постів з БД
         const posts = data.map(post => ({
             username: post.username,
             postDate: post.date,
@@ -114,7 +115,7 @@ app.get('/blog', async (req, res) => {
             post_id: post.post_id
         }));
 
-        // Pass the posts array and username to the view
+        // передаємо всі пости до основної сторінки (блог)
         res.render('blog.ejs', { username, posts });
 
     } catch (err) {
@@ -267,36 +268,36 @@ app.post('/register', async (req, res) => {
 app.post('/posts', async (req, res) => {
     // Get data from the form
     const { title, description } = req.body;
-    const usernameForm = req.session.username;  // Get username from session
+    const usernameForm = req.session.username;  // юзер поточної сесії ( якщо такий є )
     const date = new Date();
 
-    // Format the date
+    // форматування дати
     const day = date.getDate();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const fullDate = day + '.' + month + '.' + year; 
 
-    // Check if the user is logged in and fetch user ID
+    // перевірка чи є поточна сесія
     if (!usernameForm) {
         return res.status(400).send('User is not logged in');
     }
 
     try {
-        // Query the database to get the user ID based on the username
+        // запит до бази даних для пошуку по ID юзера
         const { data: userData, error: userError } = await supabase
             .from('users')
             .select('id')
             .eq('username', usernameForm)
-            .single();  // Assuming 'username' is unique
+            .single();  // для 1-го юзера
 
         if (userError || !userData) {
             console.error('Error fetching user data:', userError);
             return res.status(500).send('Error fetching user data');
         }
 
-        const userId = userData.id;  // Get the user ID from the query result
+        const userId = userData.id;  // отримуємо ID юзера з бази даних
 
-        // Now insert the post into the 'posts' table, using the user ID
+        // вставляємо новий пост до бази даних
         const { data, error } = await supabase
             .from('posts')
             .insert([
@@ -305,7 +306,7 @@ app.post('/posts', async (req, res) => {
                     date: fullDate,
                     title: title,
                     description: description,
-                    id: userId  // Use the user ID
+                    id: userId  
                 }
             ]);
 
@@ -314,7 +315,7 @@ app.post('/posts', async (req, res) => {
             return res.status(500).send('Error inserting post');
         }
 
-        // Redirect to the blog page after successful post creation
+        // повернення до блогу
         res.redirect('/blog');
     } catch (err) {
         console.error('Unexpected error:', err);
@@ -322,24 +323,25 @@ app.post('/posts', async (req, res) => {
     }
 });
 
-// Handle form submission for editing a book
+// редагування наявного посту
 app.post('/edit/:id', async (req, res) => {
     const identificatorOFChosenPost= req.body.deleteItemId;
+    // post_id для редагування конкретного посту
     const { data, error } = await supabase
             .from('posts')
             .select('*')
             .eq('post_id', identificatorOFChosenPost)
-            .single();  
-
+            .single();      
     res.render('form.ejs', {post: data, pageStatus: ''});
 }); 
 
+// Обновлення інфи наявного поста
 app.post('/editCurrent/:id', async (req, res) => {
     const formInfo = req.body;
 
     const date = new Date();
 
-    // Format the date
+    // форматування дати
     const day = date.getDate();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
