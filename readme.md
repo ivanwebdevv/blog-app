@@ -21,4 +21,4 @@ In order to access your app, you follow the link:
 
 # You can access it online by the link below
 
-[Enter the blog]()
+[Enter the blog](https://blog-app-icvx.onrender.com/)
