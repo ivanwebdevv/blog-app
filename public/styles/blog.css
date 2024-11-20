@@ -168,7 +168,88 @@ main .button:hover{
     }
 
 }
+@media (max-width: 560px) {
+    .item{
+        width: 250px;
+    }
+
+    .itemHead p:first-child{
+        font-size: 18px;
+    }
+
+    .date{
+        font-size: 14px;
+    }
+
+    .itemMain .title{
+        font-size: 24px;
+    }
+
+    .itemMain p:last-child{
+        font-size: 20px;
+    }
+
+    .actionIcon{
+        width: 30px;
+        height: 30px;
+    
+        filter: invert(1);
+        transition: 0.3s all linear;
+    }
+    
+    .actionIcon:hover{
+        width: 35px;
+        height: 35px;
+        top: 38px;
+        transition: 0.3s all linear;
+    }
+
+
+    .right a{
+        font-size: 1.1em;
+    }
+
+    header{
+        margin: 0.15em;
+    }
+
+
+}
 
 form button{
     all: unset;
+}
+
+@media (max-width: 390px) {
+    .item{
+        width: 200px;
+    }
+
+    .actionIcon{
+        width: 25px;
+        height: 25px;
+    
+        filter: invert(1);
+        transition: 0.3s all linear;
+    }
+    
+    .actionIcon:hover{
+        width: 30px;
+        height: 30px;
+        top: 78px;
+        transition: 0.3s all linear;
+    }
+
+    .fst{
+        top: 80px;
+        right: 40px;
+    }
+
+    .snd:hover{
+        top: 38px;
+    }
+
+    main .button {
+        font-size: 1.1em;
+    }
 }
